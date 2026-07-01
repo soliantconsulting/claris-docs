@@ -43,25 +43,26 @@ This loads the plugin for that session only and does not affect your installed v
 
 ### Available skills
 
-| Skill | Topics |
-|-------|--------|
-| `claris-docs:filemaker-pro` | Scripting, functions, layouts, relationships, fields, security |
-| `claris-docs:filemaker-server` | Admin Console, hosting, backups, schedules, monitoring |
-| `claris-docs:filemaker-cloud` | Cloud setup, administration, Claris ID |
-| `claris-docs:filemaker-go` | Mobile access, Go development, iOS App SDK |
-| `claris-docs:filemaker-webdirect` | Browser-based access, deployment |
-| `claris-docs:claris-studio` | Views, fields, functions, teams |
-| `claris-docs:claris-connect` | Workflow automation, connectors |
-| `claris-docs:claris-customer-console` | Accounts, teams, subscriptions |
-| `claris-docs:claris-mcp` | AI assistant integration via MCP |
-| `claris-docs:data-api` | REST Data API, authentication, CRUD |
-| `claris-docs:admin-api` | Server administration REST API |
-| `claris-docs:odata` | OData protocol, BI tool integration |
-| `claris-docs:sql-reference` | ExecuteSQL, ODBC/JDBC syntax |
-| `claris-docs:security-guide` | Encryption, hardening, compliance |
-| `claris-docs:app-upgrade-tool` | FMUpgradeTool, patch files |
-| `claris-docs:data-migration-tool` | DMT, data migration |
-| `claris-docs:developer-tool` | Developer Utilities, binding, runtime |
+| Skill | Topics                                                                                                 |
+|-------|--------------------------------------------------------------------------------------------------------|
+| `claris-docs:filemaker-pro` | Scripting, functions, layouts, relationships, fields, security                                         |
+| `claris-docs:filemaker-calc` | Debug/write/explain calculations - bundles an offline evaluator (`fmeval.py`) to run formulas for real |
+| `claris-docs:filemaker-server` | Admin Console, hosting, backups, schedules, monitoring                                                 |
+| `claris-docs:filemaker-cloud` | Cloud setup, administration, Claris ID                                                                 |
+| `claris-docs:filemaker-go` | Mobile access, Go development, iOS App SDK                                                             |
+| `claris-docs:filemaker-webdirect` | Browser-based access, deployment                                                                       |
+| `claris-docs:claris-studio` | Views, fields, functions, teams                                                                        |
+| `claris-docs:claris-connect` | Workflow automation, connectors                                                                        |
+| `claris-docs:claris-customer-console` | Accounts, teams, subscriptions                                                                         |
+| `claris-docs:claris-mcp` | AI assistant integration via MCP                                                                       |
+| `claris-docs:data-api` | REST Data API, authentication, CRUD                                                                    |
+| `claris-docs:admin-api` | Server administration REST API                                                                         |
+| `claris-docs:odata` | OData protocol, BI tool integration                                                                    |
+| `claris-docs:sql-reference` | ExecuteSQL, ODBC/JDBC syntax                                                                           |
+| `claris-docs:security-guide` | Encryption, hardening, compliance                                                                      |
+| `claris-docs:app-upgrade-tool` | FMUpgradeTool, patch files                                                                             |
+| `claris-docs:data-migration-tool` | DMT, data migration                                                                                    |
+| `claris-docs:developer-tool` | Developer Utilities, binding, runtime                                                                  |
 
 ## Project setup
 

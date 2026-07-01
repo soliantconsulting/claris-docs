@@ -1,0 +1,17 @@
+[
+  {"query": "why does my filemaker calc return .5 instead of 0.5", "should_trigger": true},
+  {"query": "write a filemaker calculation to extract the domain from an email address", "should_trigger": true},
+  {"query": "explain what this filemaker formula does step by step: Let ( [ x = Position(name;\" \";1;1) ] ; Left(name;x-1) )", "should_trigger": true},
+  {"query": "what does Left ( \"apples\" ; 1 ) evaluate to in filemaker", "should_trigger": true},
+  {"query": "my filemaker custom function gives the wrong result, can you help me debug it", "should_trigger": true},
+  {"query": "why is my Position() returning 0 in this filemaker calculation", "should_trigger": true},
+  {"query": "does 1/3 * 3 equal 1 in a filemaker calculation or does it give .9999", "should_trigger": true},
+  {"query": "trace through this filemaker Let statement and show me each variable value", "should_trigger": true},
+  {"query": "how does operator precedence work in filemaker calculations", "should_trigger": true},
+  {"query": "what does Char(0) return in a filemaker calc and why", "should_trigger": true},
+  {"query": "how do i set up ssl certificates on filemaker server", "should_trigger": false},
+  {"query": "how do i connect power bi to filemaker via odata", "should_trigger": false},
+  {"query": "how do i create a portal to show related records on a filemaker layout", "should_trigger": false},
+  {"query": "how do i write a loop script that iterates over all records in a found set", "should_trigger": false},
+  {"query": "how do i access filemaker data from python using the data api", "should_trigger": false}
+]
