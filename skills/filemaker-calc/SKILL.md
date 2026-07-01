@@ -49,6 +49,7 @@ python fmeval.py 'JSONGetElement ( "{\"a\":[1,2,3]}" ; "a[1]" )'  => 2
 |---|---|-----------------------------------------------------------------------|
 | Evaluate | `fmeval.py '<calc>'` | What does this return?                                                |
 | Parameters | `fmeval.py --param Name=value --param N2=v2 '<calc>'` | Test a custom-function **body** with inputs (repeatable)              |
+| Get() state | `fmeval.py --get AccountName=admin '<calc>'` | Set a `Get(...)` selector's value (repeatable)                        |
 | Trace | `fmeval.py --trace '<calc>'` | **Debug**: print every `Let`/`While` binding's value, then the result |
 | Trace loop | `fmeval.py --trace-every N '<calc>'` | Trace a long `While` - init bindings + only every Nth iteration       |
 | Test | `fmeval.py --test cases.tsv` | **Verify**: a TSV of `expr⇥expected` lines → pass/fail                |
@@ -210,13 +211,21 @@ The evaluator is authoritative for **pure functions of the inputs** — most cal
 most custom functions. It is **not** authoritative for runtime context, and reports
 `unsupported: <reason>` for:
 
-- field references (`Table::Field`), `Get(...)` runtime state
-- `ExecuteSQL`, `GetNthRecord`, `GetSummary`, related/aggregate-over-records functions
+- field references (`Table::Field`)
+- `ExecuteSQL`, `GetNthRecord`, `GetSummary`, `GetField`, related/aggregate-over-records
 - container functions, plug-in (external) functions
 - `Evaluate` of a non-literal expression
 - non-EN_US locales for date/time formatting
 
-When you cross that line: stop verifying, reason from the function reference, and
+**`Get(...)` is *approximated*, not truly known.** A selector resolves as: (1) a value
+you supply with `--get Selector=value`; (2) for the clock selectors (`CurrentDate`,
+`CurrentTime`, `CurrentTimestamp`, …) a **live system value** — so it's *nondeterministic*,
+like FileMaker; (3) otherwise the **Claris doc's example value** (e.g. `Get(FoundCount)`→`7`,
+`Get(HostName)`→`fms.example.com`) so the calc yields something illustrative; (4) else empty.
+Treat a `Get()` result as illustrative unless you supplied it with `--get` — the real value
+depends on the running solution.
+
+When you cross the hard boundary: stop verifying, reason from the function reference, and
 **flag the uncertainty explicitly** ("I can't execute this part — it depends on a field
 value; based on the docs it should…"). Never present an unverified result as if the
 evaluator confirmed it.

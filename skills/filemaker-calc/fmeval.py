@@ -31,10 +31,15 @@ NOT binds higher than ^, then * /, + -, &, comparisons, AND, then OR/XOR.
 """
 
 import decimal
+import difflib
+import base64
 import json
+import math
 import random as _random
 import re
-from datetime import date as _pydate
+import urllib.parse as _urlparse
+import uuid as _uuid
+from datetime import date as _pydate, datetime as _pydatetime, timezone as _pytz
 from decimal import Decimal
 
 # FileMaker keeps up to 400 significant digits; mirror that for arithmetic.
@@ -71,6 +76,8 @@ class FMTemporal:
             return _fmt_date(self.value)
         if self.kind == "time":
             return _fmt_time(self.value)
+        if self.kind == "time12":
+            return _fmt_time12(self.value)
         return _fmt_timestamp(self.value)
 
 
@@ -95,6 +102,17 @@ def _fmt_time(secs):                              # standalone time: 24-hour H:M
     return "%s%d:%02d:%02d%s" % ("-" if neg else "", whole // 3600,
                                  (whole % 3600) // 60, whole % 60,
                                  _frac_str(val - whole))
+
+
+def _fmt_time12(secs):                            # 12-hour time: h:MM:SS AM/PM
+    val = secs if isinstance(secs, Decimal) else num(secs)
+    neg = val < 0
+    val = abs(val)
+    whole = int(val)
+    h = whole // 3600
+    return "%s%d:%02d:%02d%s %s" % ("-" if neg else "", (h % 12) or 12,
+                                    (whole % 3600) // 60, whole % 60,
+                                    _frac_str(val - whole), "AM" if h % 24 < 12 else "PM")
 
 
 def _fmt_timestamp(total):                        # M/D/YYYY h:MM[:SS] AM/PM (12-hour)
@@ -393,9 +411,13 @@ def _scan_string(s, i):
             return i + 1, "".join(out)            # closing quote
         if c == "\\" and i + 1 < n:
             nx = s[i + 1]
-            out.append({"r": CR, "n": CR, "t": "\t"}.get(nx, nx))
-            i += 2
-            continue
+            if nx in ('"', "\\"):
+                out.append(nx); i += 2; continue
+            if nx in ("r", "n", "¶"):             # \r \n \¶ all mean a carriage return
+                out.append(CR); i += 2; continue
+            if nx == "t":
+                out.append("\t"); i += 2; continue
+            out.append("\\"); i += 1; continue    # unrecognized escape: keep the backslash
         out.append(CR if c == "¶" else c)
         i += 1
     raise CalcSyntaxError("unterminated string literal")
@@ -529,17 +551,18 @@ class Env:
     names. A function library (name -> compiled custom fn) supports recursion."""
 
     def __init__(self, names=None, vars=None, library=None, depth=0, trace=None,
-                 trace_every=1):
+                 trace_every=1, getvals=None):
         self.names = names or {}
         self.vars = vars or {}
         self.library = library or {}
         self.depth = depth
         self.trace = trace            # if a list, Let/While bindings append (name, value)
         self.trace_every = trace_every  # While: record only every Nth iteration
+        self.getvals = getvals or {}  # Get() selector overrides (lower-cased keys)
 
     def child(self, names):
         return Env(names, self.vars, self.library, self.depth + 1, self.trace,
-                   self.trace_every)
+                   self.trace_every, self.getvals)
 
 
 MAX_DEPTH = 4000                                  # recursion guard for custom fns
@@ -813,10 +836,211 @@ def _sf_evaluate(args, env):
     return evaluate(parse(args[0][1]), env)
 
 
+# Get ( selector ) -- runtime state. Offline, a selector resolves in order:
+#   1. a caller-supplied value (env.getvals; CLI: --get Selector=value)
+#   2. a live clock value for the date/time selectors (nondeterministic, like FileMaker)
+#   3. the Claris doc's example value, so the calc yields something illustrative
+#   4. otherwise empty "".
+# Date/time selectors coerce their string to the right temporal type so arithmetic
+# works (e.g. Get ( CurrentDate ) + 7). CurrentTime displays 12-hour, as FileMaker does.
+_GET_TEMPORAL = {"currentdate": "date", "currenttime": "time12",
+                 "currenttimestamp": "timestamp", "currenthosttimestamp": "timestamp"}
+_GET_CLOCK = {"currentdate", "currenttime", "currenttimestamp", "currenthosttimestamp",
+              "currenttimeutcmilliseconds", "currenttimeutcmicroseconds"}
+
+# Get() selector -> Claris doc example value (harvested from skills/get-*.md); used as
+# a plausible default for selectors we can't compute. Clock selectors are excluded
+# (computed live above).
+_GET_SELECTORS = {  # valid Get() selectors (cp_getsel + doc pages); lower -> proper
+    'accountextendedprivileges': 'AccountExtendedPrivileges',
+    'accountgroupname': 'AccountGroupName', 'accountname': 'AccountName',
+    'accountprivilegesetname': 'AccountPrivilegeSetName', 'accounttype': 'AccountType',
+    'activefieldcontents': 'ActiveFieldContents', 'activefieldname': 'ActiveFieldName',
+    'activefieldtablename': 'ActiveFieldTableName',
+    'activelayoutobjectname': 'ActiveLayoutObjectName',
+    'activemodifierkeys': 'ActiveModifierKeys',
+    'activeportalrownumber': 'ActivePortalRowNumber',
+    'activerecordnumber': 'ActiveRecordNumber',
+    'activerepetitionnumber': 'ActiveRepetitionNumber',
+    'activeselectionsize': 'ActiveSelectionSize',
+    'activeselectionstart': 'ActiveSelectionStart', 'allowabortstate': 'AllowAbortState',
+    'allowformattingbarstate': 'AllowFormattingBarState',
+    'applicationarchitecture': 'ApplicationArchitecture',
+    'applicationlanguage': 'ApplicationLanguage', 'applicationversion': 'ApplicationVersion',
+    'cachefilename': 'CacheFileName', 'cachefilepath': 'CacheFilePath',
+    'calculationrepetitionnumber': 'CalculationRepetitionNumber',
+    'connectionattributes': 'ConnectionAttributes', 'connectionstate': 'ConnectionState',
+    'currentdate': 'CurrentDate', 'currentextendedprivileges': 'CurrentExtendedPrivileges',
+    'currenthosttimestamp': 'CurrentHostTimestamp',
+    'currentprivilegesetname': 'CurrentPrivilegeSetName', 'currenttime': 'CurrentTime',
+    'currenttimestamp': 'CurrentTimestamp',
+    'currenttimeutcmicroseconds': 'CurrentTimeUTCMicroseconds',
+    'currenttimeutcmilliseconds': 'CurrentTimeUTCMilliseconds',
+    'custommenusetname': 'CustomMenuSetName', 'data-file-position': 'data-file-position',
+    'desktoppath': 'DesktopPath', 'device': 'Device', 'directory': 'directory',
+    'documentspath': 'DocumentsPath', 'documentspathlisting': 'DocumentsPathListing',
+    'encryptionstate': 'EncryptionState', 'errorcapturestate': 'ErrorCaptureState',
+    'file-exists': 'file-exists', 'file-size': 'file-size',
+    'filelocaleelements': 'FileLocaleElements', 'filemakerpath': 'FileMakerPath',
+    'filename': 'FileName', 'filepath': 'FilePath', 'filesize': 'FileSize',
+    'foundcount': 'FoundCount', 'functions': 'functions',
+    'highcontraststate': 'HighContrastState',
+    'hostapplicationversion': 'HostApplicationVersion', 'hostipaddress': 'HostIPAddress',
+    'hostname': 'HostName', 'installedfmplugins': 'InstalledFMPlugins',
+    'installedfmpluginsasjson': 'InstalledFMPluginsAsJSON', 'lasterror': 'LastError',
+    'lasterrordetail': 'LastErrorDetail', 'lasterrorlocation': 'LastErrorLocation',
+    'lastmessagechoice': 'LastMessageChoice', 'laststeptokensused': 'LastStepTokensUsed',
+    'layoutaccess': 'LayoutAccess', 'layoutcount': 'LayoutCount', 'layoutname': 'LayoutName',
+    'layoutnumber': 'LayoutNumber', 'layouttablename': 'LayoutTableName',
+    'layoutviewstate': 'LayoutViewState', 'menubarstate': 'MenubarState',
+    'modifiedfields': 'ModifiedFields', 'multiuserstate': 'MultiUserState',
+    'networkprotocol': 'NetworkProtocol', 'networktype': 'NetworkType',
+    'opendatafileinfo': 'OpenDataFileInfo', 'pagecount': 'PageCount',
+    'pagenumber': 'PageNumber', 'persistentid': 'PersistentID',
+    'preferencespath': 'PreferencesPath', 'printername': 'PrinterName',
+    'quickfindtext': 'QuickFindText', 'recordaccess': 'RecordAccess', 'recordid': 'RecordID',
+    'recordmodificationcount': 'RecordModificationCount', 'recordnumber': 'RecordNumber',
+    'recordopencount': 'RecordOpenCount', 'recordopenstate': 'RecordOpenState',
+    'regionmonitorevents': 'RegionMonitorEvents', 'requestcount': 'RequestCount',
+    'requestomitstate': 'RequestOmitState',
+    'reverttransactiononerrorstate': 'RevertTransactionOnErrorState',
+    'screendepth': 'ScreenDepth', 'screenheight': 'ScreenHeight',
+    'screenscalefactor': 'ScreenScaleFactor', 'screenwidth': 'ScreenWidth',
+    'scriptanimationstate': 'ScriptAnimationState', 'scriptname': 'ScriptName',
+    'scriptparameter': 'ScriptParameter', 'scriptresult': 'ScriptResult',
+    'sessionidentifier': 'SessionIdentifier', 'sortstate': 'SortState',
+    'statusareastate': 'StatusAreaState', 'systemappearance': 'SystemAppearance',
+    'systemdrive': 'SystemDrive', 'systemipaddress': 'SystemIPAddress',
+    'systemlanguage': 'SystemLanguage', 'systemlocaleelements': 'SystemLocaleElements',
+    'systemnicaddress': 'SystemNICAddress', 'systemplatform': 'SystemPlatform',
+    'systemstorageavailable': 'SystemStorageAvailable', 'systemversion': 'SystemVersion',
+    'temporarypath': 'TemporaryPath', 'textrulervisible': 'TextRulerVisible',
+    'totalrecordcount': 'TotalRecordCount', 'touchkeyboardstate': 'TouchKeyboardState',
+    'transactionopenstate': 'TransactionOpenState',
+    'triggercurrentpanel': 'TriggerCurrentPanel',
+    'triggerexternalevent': 'TriggerExternalEvent',
+    'triggergestureinfo': 'TriggerGestureInfo', 'triggerkeystroke': 'TriggerKeystroke',
+    'triggermodifierkeys': 'TriggerModifierKeys', 'triggertargetpanel': 'TriggerTargetPanel',
+    'usercount': 'UserCount', 'username': 'UserName',
+    'usesystemformatsstate': 'UseSystemFormatsState', 'uuid': 'UUID',
+    'uuidnumber': 'UUIDNumber', 'windowcontentheight': 'WindowContentHeight',
+    'windowcontentwidth': 'WindowContentWidth', 'windowdesktopheight': 'WindowDesktopHeight',
+    'windowdesktopwidth': 'WindowDesktopWidth', 'windowheight': 'WindowHeight',
+    'windowleft': 'WindowLeft', 'windowmode': 'WindowMode', 'windowname': 'WindowName',
+    'windoworientation': 'WindowOrientation', 'windowstyle': 'WindowStyle',
+    'windowtop': 'WindowTop', 'windowuuid': 'WindowUUID', 'windowvisible': 'WindowVisible',
+    'windowwidth': 'WindowWidth', 'windowzoomlevel': 'WindowZoomLevel',
+}
+
+
+_GET_EXAMPLE = {
+    'accountextendedprivileges': 'fmwebdirect', 'accountgroupname': 'Sales',
+    'accountname': 'bob@example.com', 'accountprivilegesetname': '[Read-Only Access]',
+    'activefieldcontents': 'SomeShop', 'activefieldname': 'Country',
+    'activelayoutobjectname': 'customerName', 'activemodifierkeys': '9',
+    'activeportalrownumber': '5', 'activerecordnumber': '4', 'activerepetitionnumber': '5',
+    'activeselectionsize': '4', 'activeselectionstart': '5', 'allowabortstate': '1',
+    'allowformattingbarstate': '1', 'applicationarchitecture': 'Apple silicon',
+    'applicationlanguage': 'English', 'applicationversion': 'Pro 26.0.1',
+    'cachefilename': 'FMTEMPFM9912_2.tmp',
+    'cachefilepath': '/C:/Users/username/AppData/Local/Temp/',
+    'calculationrepetitionnumber': '5', 'connectionstate': '3',
+    'currentextendedprivileges': 'fmapp', 'currentprivilegesetname': '[Full Access]',
+    'custommenusetname': 'Custom Menu Set #1',
+    'desktoppath': '/C:/Users/John Smith/Desktop/', 'device': '2',
+    'documentspath': '/C:/Users/Username/Documents/', 'encryptionstate': '0',
+    'errorcapturestate': '1',
+    'filemakerpath': '/C:/Program Files/FileMaker/FileMaker Pro/', 'filename': 'Contacts',
+    'filepath': 'file:/C:/Users/Username/Documents/Clients.fmp12', 'filesize': '15000',
+    'hostapplicationversion': 'Pro 26.0.1',
+    'hostipaddress': '192.168.1.10', 'hostname': 'fms.example.com', 'lasterror': '0',
+    'layoutaccess': '1', 'layoutcount': '3', 'layoutname': 'Product List',
+    'layoutnumber': '3', 'layouttablename': 'Teachers', 'menubarstate': '1',
+    'multiuserstate': '0', 'networkprotocol': 'TCP/IP', 'networktype': '3',
+    'pagenumber': '4', 'persistentid': 'A1B2C3D4E5F60718293A4B5C6D7E8F90',
+    'preferencespath': '/C:/Users/John Smith/AppData/Local/',
+    'printername': 'HP LaserJet P4015, winspool, Ne03', 'recordaccess': '1',
+    'recordmodificationcount': '0', 'recordnumber': '3', 'recordopencount': '4',
+    'recordopenstate': '1', 'requestcount': '5', 'requestomitstate': '1',
+    'reverttransactiononerrorstate': '0', 'screendepth': '32', 'screenheight': '480',
+    'screenscalefactor': '2', 'screenwidth': '640', 'scriptanimationstate': '1',
+    'scriptname': 'Print Report', 'sessionidentifier': 'Sharon Lloyd A9oCnLQ',
+    'sortstate': '1', 'statusareastate': '1', 'systemappearance': 'High Contrast White',
+    'systemdrive': '/C:/', 'systemipaddress': '192.168.1.100',
+    'systemlanguage': 'Japanese', 'systemnicaddress': '00:07:34:4e:c2:0d',
+    'systemplatform': '-', 'systemstorageavailable': '417048244224',
+    'systemversion': '26.0', 'temporarypath': '/C:/Users/Username/AppData/Local/Temp/S11/',
+    'textrulervisible': '1', 'totalrecordcount': '876', 'usercount': '10',
+    'username': 'Sharon Lloyd', 'usesystemformatsstate': '1',
+    'uuidnumber': '1234567890123456789012345678901234567890123456789012345678',
+    'windowcontentwidth': '400', 'windowdesktopheight': '1040',
+    'windowdesktopwidth': '1920', 'windowheight': '300', 'windowleft': '52',
+    'windowmode': '2', 'windowname': 'Contacts', 'windowstyle': '0', 'windowtop': '52',
+    'windowvisible': '1', 'windowwidth': '300', 'windowzoomlevel': '200',
+}
+
+
+def _get_clock(low):
+    """A live value for a clock selector (nondeterministic, exactly as FileMaker's
+    Get(CurrentDate) etc. return 'now')."""
+    now = _pydatetime.now()
+    d = now.date().toordinal()
+    secs = now.hour * 3600 + now.minute * 60 + now.second
+    if low == "currentdate":
+        return FMTemporal(d, "date")
+    if low == "currenttime":
+        return FMTemporal(secs, "time12")
+    if low in ("currenttimestamp", "currenthosttimestamp"):
+        return FMTemporal((d - 1) * 86400 + secs, "timestamp")
+    u = _pydatetime.now(_pytz.utc)                    # UTC epoch counts since 0001-01-01
+    total = (u.date().toordinal() - 1) * 86400 + u.hour * 3600 + u.minute * 60 + u.second
+    if low == "currenttimeutcmilliseconds":
+        return num(total * 1000 + u.microsecond // 1000)
+    return num(total * 1000000 + u.microsecond)       # currenttimeutcmicroseconds
+
+
+def _coerce_get(low, raw):
+    """Coerce an override/example string to the selector's value type."""
+    kind = _GET_TEMPORAL.get(low)
+    if kind == "date":
+        return _fn_getasdate([raw])
+    if kind in ("time", "time12"):
+        t = _fn_getastime([raw])
+        if kind == "time12" and isinstance(t, FMTemporal):
+            return FMTemporal(t.value, "time12")
+        return t
+    if kind == "timestamp":
+        return _fn_getastimestamp([raw])
+    return raw
+
+
+def _sf_get(args, env):
+    if len(args) != 1:
+        raise EvalError("Get takes one selector, e.g. Get ( AccountName )")
+    node = args[0]
+    sel = node[1] if node[0] in ("name", "str") else as_text(evaluate(node, env))
+    low = sel.lower()
+    if low in env.getvals:                            # 1. caller-supplied value
+        return _coerce_get(low, env.getvals[low])
+    if low not in _GET_SELECTORS:                     # a typo, not a real selector
+        hint = difflib.get_close_matches(low, _GET_SELECTORS, n=1)
+        raise EvalError("unknown Get selector %r%s" % (sel,
+            " -- did you mean %s?" % _GET_SELECTORS[hint[0]] if hint else ""))
+    if low == "uuid":                                # always a valid v4 UUID
+        return str(_uuid.uuid4()).upper()
+    if low == "foundcount":                           # mock: a number, random 10-100
+        return num(_random.randint(10, 100))
+    if low in _GET_CLOCK:                              # 2. live clock value
+        return _get_clock(low)
+    if low in _GET_EXAMPLE:                            # 3. Claris doc example value
+        return _coerce_get(low, _GET_EXAMPLE[low])
+    return ""                                         # 4. otherwise empty
+
+
 SPECIAL = {
     "if": _sf_if, "case": _sf_case, "choose": _sf_choose,
     "let": _sf_let, "while": _sf_while, "substitute": _sf_substitute,
-    "evaluate": _sf_evaluate,
+    "evaluate": _sf_evaluate, "get": _sf_get,
 }
 # jsonsetelement is registered after its definition in the JSON section below.
 
@@ -1563,7 +1787,23 @@ SPECIAL["jsonsetelement"] = _sf_jsonsetelement
 # FMTemporal so the result displays as a date/time/timestamp.
 # ===========================================================================
 _DATE_RE = re.compile(r"\s*(\d{1,2})/(\d{1,2})/(\d{1,4})\s*$")
-_TIME_RE = re.compile(r"\s*(\d+):(\d{1,2})(?::(\d{1,2})(?:\.\d+)?)?\s*$")
+_TIME_RE = re.compile(r"\s*(\d+):(\d{1,2})(?::(\d{1,2})(?:\.\d+)?)?\s*([AaPp][Mm])?\s*$")
+
+
+def _parse_time_text(v):
+    """Parse a time string -> (seconds, is_12hour) or None. A meridiem (AM/PM)
+    requires an hour of 1-12, so '22:02:02 pm' is invalid (returns None), matching
+    FileMaker; is_12hour records that the value should display in 12-hour form."""
+    m = _TIME_RE.match(v)
+    if not m:
+        return None
+    h = int(m[1])
+    ap = m[4]
+    if ap:
+        if not (1 <= h <= 12):
+            return None
+        h = (h % 12) + (12 if ap[0] in "Pp" else 0)
+    return h * 3600 + int(m[2]) * 60 + int(m[3] or 0), bool(ap)
 
 
 def _resolve_year(ystr):
@@ -1605,10 +1845,8 @@ def _coerce_secs(v):
         return int(v.value) % 86400 if v.kind == "timestamp" else int(v.value)
     if isinstance(v, Decimal):
         return int(v)
-    m = _TIME_RE.match(v)
-    if not m:
-        return None
-    return int(m[1]) * 3600 + int(m[2]) * 60 + int(m[3] or 0)
+    r = _parse_time_text(v)
+    return r[0] if r is not None else None
 
 
 def _safe_date(v):
@@ -1743,10 +1981,10 @@ def _fn_getastime(a):
                           "time")
     if isinstance(v, Decimal):                      # a number is raw seconds
         return FMTemporal(v, "time")
-    m = _TIME_RE.match(v)
-    if not m:
+    r = _parse_time_text(as_text(v))
+    if r is None:
         return "?"
-    return FMTemporal(int(m[1]) * 3600 + int(m[2]) * 60 + int(m[3] or 0), "time")
+    return FMTemporal(r[0], "time12" if r[1] else "time")   # AM/PM input -> 12-hour display
 
 
 def _fn_getastimestamp(a):
@@ -1769,13 +2007,232 @@ def _fn_getastimestamp(a):
         return "?"
     h = int(m[4])
     if m[7]:                                       # AM/PM given -> 12-hour input
+        if not (1 <= h <= 12):
+            return "?"
         h = (h % 12) + (12 if m[7].lower() == "pm" else 0)
     secs = h * 3600 + int(m[5]) * 60 + int(m[6] or 0)
     return FMTemporal((days - 1) * 86400 + secs, "timestamp")
 
 
+
+# ===========================================================================
+# Additional pure functions (trig, stats, financial, encoding, list, misc).
+# ===========================================================================
+def _mathf(fn, x):
+    try:
+        return _inexact(num(fn(float(x))))
+    except (ValueError, OverflowError):
+        raise EvalError("math domain error")
+
+
+def _fn_cos(a): return _mathf(math.cos, as_number(a[0]))
+def _fn_sin(a): return _mathf(math.sin, as_number(a[0]))
+def _fn_tan(a): return _mathf(math.tan, as_number(a[0]))
+def _fn_acos(a): return _mathf(math.acos, as_number(a[0]))
+def _fn_asin(a): return _mathf(math.asin, as_number(a[0]))
+def _fn_atan(a): return _mathf(math.atan, as_number(a[0]))
+def _fn_degrees(a): return _mathf(math.degrees, as_number(a[0]))
+def _fn_radians(a): return _mathf(math.radians, as_number(a[0]))
+
+
+def _fn_combination(a):
+    n = int(as_number(a[0])); k = int(as_number(a[1]))
+    if n < 0 or k < 0 or k > n:
+        return "?"
+    return num(math.comb(n, k))
+
+
+def _fn_factorial(a):
+    n = int(as_number(a[0]))
+    if n < 0:
+        return "?"
+    factors = int(as_number(a[1])) if len(a) > 1 and as_text(a[1]) != "" else n
+    r = 1
+    for i in range(max(factors, 0)):
+        if n - i <= 0:
+            break
+        r *= (n - i)
+    return num(r)
+
+
+def _stat(a, sample, want_var):
+    xs = [as_number(v) for v in a if as_text(v) != ""]
+    denom = (len(xs) - 1) if sample else len(xs)
+    if denom <= 0:
+        return "?"
+    mean = _CTX.divide(sum(xs, num(0)), num(len(xs)))
+    ss = sum(((x - mean) ** 2 for x in xs), num(0))
+    v = _CTX.divide(ss, num(denom))
+    return _inexact(v if want_var else v.sqrt(context=_CTX))
+
+
+def _fn_stdev(a): return _stat(a, True, False)
+def _fn_stdevp(a): return _stat(a, False, False)
+def _fn_variance(a): return _stat(a, True, True)
+def _fn_variancep(a): return _stat(a, False, True)
+
+
+def _fn_pv(a):                                    # PV(payment; interestRate; periods)
+    p, r, n = as_number(a[0]), as_number(a[1]), as_number(a[2])
+    return _inexact(p * n if r == 0 else p * (1 - _fm_pow(1 + r, -n)) / r)
+
+
+def _fn_fv(a):                                    # FV(payment; interestRate; periods)
+    p, r, n = as_number(a[0]), as_number(a[1]), as_number(a[2])
+    return _inexact(p * n if r == 0 else p * (_fm_pow(1 + r, n) - 1) / r)
+
+
+def _fn_pmt(a):                                   # PMT(principal; interestRate; term)
+    pv, r, n = as_number(a[0]), as_number(a[1]), as_number(a[2])
+    return _inexact(pv / n if r == 0 else pv * r / (1 - _fm_pow(1 + r, -n)))
+
+
+def _fn_sortvalues(a):                            # datatype: sign=direction, |dt|=type
+    vals = _chars(a[0]).split(CR)
+    if vals and vals[-1] == "":
+        vals = vals[:-1]
+    dt = int(as_number(a[1])) if len(a) > 1 and as_text(a[1]) != "" else 1
+    key = (lambda v: as_number(v)) if abs(dt) == 2 else (lambda v: v.casefold())
+    out = sorted(vals, key=key, reverse=dt < 0)
+    return "".join(v + CR for v in out)
+
+
+def _fn_uniquevalues(a):                          # de-dupe (first-occurrence order); trailing ¶
+    vals = _chars(a[0]).split(CR)
+    if vals and vals[-1] == "":
+        vals = vals[:-1]
+    dt = int(as_number(a[1])) if len(a) > 1 and as_text(a[1]) != "" else 1
+    numeric = abs(dt) == 2
+    seen, out = set(), []
+    for v in vals:
+        key = as_number(v) if numeric else v.casefold()
+        if key not in seen:
+            seen.add(key); out.append(v)
+    return "".join(v + CR for v in out)
+
+
+def _fn_trimall(a):
+    # TrimAll ( text ; trimSpaces ; trimType ). trimType 3 removes ALL spaces;
+    # 0/1/2 leave one space between roman words (we implement the roman/EN case;
+    # the Asian full-width/non-roman spacing nuances aren't modeled). trimSpaces
+    # (full-width spaces) only matters for non-roman text.
+    t = _chars(a[0])
+    if int(as_number(a[2])) == 3:
+        return t.replace(" ", "").replace("　", "")
+    return re.sub(r" +", " ", t).strip(" ")
+
+
+def _fn_quote(a):
+    s = _chars(a[0]).replace('"', '\\"').replace(CR, "\\" + CR)  # escape " and CR (not \)
+    return '"' + s + '"'
+
+
+def _fn_rgb(a):
+    r, g, b = (int(as_number(a[i])) for i in range(3))
+    return num(r * 65536 + g * 256 + b)
+
+
+def _fn_base64encode(a):
+    return base64.b64encode(_chars(a[0]).encode("utf-8")).decode("ascii")
+
+
+def _fn_base64decode(a):
+    try:
+        return base64.b64decode(_chars(a[0])).decode("utf-8", "replace")
+    except Exception:
+        return "?"
+
+
+def _fn_hexencode(a):
+    return _chars(a[0]).encode("utf-8").hex().upper()
+
+
+def _fn_hexdecode(a):
+    try:
+        return bytes.fromhex(_chars(a[0])).decode("utf-8", "replace")
+    except ValueError:
+        return "?"
+
+
+def _fn_getasurlencoded(a):
+    return re.sub(r"%[0-9A-F]{2}", lambda m: m.group(0).lower(),
+                  _urlparse.quote(_chars(a[0]), safe=""))
+
+
+def _fn_jsonmakearray(a):                         # JSONMakeArray(data; delimiter; type)
+    data = _chars(a[0])
+    delim = _chars(a[1]) if len(a) > 1 and as_text(a[1]) != "" else CR
+    jt = int(as_number(a[2])) if len(a) > 2 and as_text(a[2]) != "" else 1
+    items = data.split(delim) if delim else [data]
+    try:
+        return _json_compact([_json_coerce(x, jt) for x in items])
+    except _JsonError as e:
+        return str(e)
+
+
+def _fn_jsonparse(a):                             # offline: validate + normalize compact
+    try:
+        _json_parse(a[0])
+    except _JsonError as e:
+        return str(e)
+    return as_text(a[0])
+
+
+def _fn_isvalidexpression(a):
+    try:
+        parse(_chars(a[0]))
+        return num(1)
+    except CalcSyntaxError:
+        return num(0)
+
+
+def _sf_isvalid(args, env):                       # 1 unless evaluating raises
+    try:
+        for x in args:
+            evaluate(x, env)
+        return num(1)
+    except EvalError:
+        return num(0)
+
+
+def _sf_setprecision(args, env):                  # display an inexact result at N digits
+    if len(args) != 2:
+        raise EvalError("SetPrecision takes 2 arguments")
+    val = evaluate(args[0], env)
+    p = max(16, min(int(as_number(evaluate(args[1], env))), 400))
+    if isinstance(val, Decimal):
+        return val.quantize(Decimal(1).scaleb(-p), rounding=decimal.ROUND_HALF_UP,
+                            context=decimal.Context(prec=p + 64))  # exact, shown in full
+    return val
+
+
+def _sf_setrecursion(args, env):                  # limit arg ignored (capped at MAX_DEPTH)
+    if len(args) != 2:
+        raise EvalError("SetRecursion takes 2 arguments")
+    return evaluate(args[0], env)
+
+
+SPECIAL["isvalid"] = _sf_isvalid
+SPECIAL["setprecision"] = _sf_setprecision
+SPECIAL["setrecursion"] = _sf_setrecursion
+
+
 # Registry: lower-name -> (impl, arity).  arity "V" = variadic.
 FUNCS = {
+    "cos": (_fn_cos, 1), "sin": (_fn_sin, 1), "tan": (_fn_tan, 1),
+    "acos": (_fn_acos, 1), "asin": (_fn_asin, 1), "atan": (_fn_atan, 1),
+    "degrees": (_fn_degrees, 1), "radians": (_fn_radians, 1),
+    "combination": (_fn_combination, 2), "factorial": (_fn_factorial, "V"),
+    "stdev": (_fn_stdev, "V"), "stdevp": (_fn_stdevp, "V"),
+    "variance": (_fn_variance, "V"), "variancep": (_fn_variancep, "V"),
+    "fv": (_fn_fv, 3), "pmt": (_fn_pmt, 3), "pv": (_fn_pv, 3),
+    "sortvalues": (_fn_sortvalues, "V"), "uniquevalues": (_fn_uniquevalues, "V"),
+    "trimall": (_fn_trimall, 3), "quote": (_fn_quote, 1), "rgb": (_fn_rgb, 3),
+    "base64encode": (_fn_base64encode, 1), "base64decode": (_fn_base64decode, 1),
+    "hexencode": (_fn_hexencode, 1), "hexdecode": (_fn_hexdecode, 1),
+    "getasurlencoded": (_fn_getasurlencoded, 1),
+    "jsonmakearray": (_fn_jsonmakearray, "V"), "jsonparse": (_fn_jsonparse, 1),
+    "isvalidexpression": (_fn_isvalidexpression, 1),
     "left": (_fn_left, 2), "right": (_fn_right, 2), "middle": (_fn_middle, 3),
     "length": (_fn_length, 1), "position": (_fn_position, 4),
     "patterncount": (_fn_patterncount, 2), "replace": (_fn_replace, 4),
@@ -1812,14 +2269,117 @@ FUNCS = {
     "getastimestamp": (_fn_getastimestamp, 1),
 }
 
-# Known functions we deliberately don't evaluate offline yet, with the reason.
+# Functions known to FileMaker (see src/calc.c) that we deliberately do NOT
+# evaluate offline, each with the reason. Everything here reports
+# 'unsupported: <name> (<reason>)' rather than guessing.
 UNSUPPORTED = {
-    "get": "runtime state",
-    "getfield": "needs a record context",
-    "getnthrecord": "needs a found set",
-    "getsummary": "needs a found set",
-    "executesql": "needs the database engine",
-    "executesqle": "needs the database engine",
+    "jsonparsedstate": "depends on the JSON parse-cache state (not modeled)",
+    # FileMaker path conversion (not implemented)
+    'convertfromfilemakerpath': 'FileMaker path conversion (not implemented)',
+    'converttofilemakerpath': 'FileMaker path conversion (not implemented)',
+    'posixpath': 'FileMaker path conversion (not implemented)',
+    'urlpath': 'FileMaker path conversion (not implemented)',
+    'winpath': 'FileMaker path conversion (not implemented)',
+    # Japanese / locale text (not implemented)
+    'daynamej': 'Japanese / locale text (not implemented)',
+    'furigana': 'Japanese / locale text (not implemented)',
+    'hiragana': 'Japanese / locale text (not implemented)',
+    'kanahankaku': 'Japanese / locale text (not implemented)',
+    'kanazenkaku': 'Japanese / locale text (not implemented)',
+    'kanjinumeral': 'Japanese / locale text (not implemented)',
+    'katakana': 'Japanese / locale text (not implemented)',
+    'monthnamej': 'Japanese / locale text (not implemented)',
+    'numtojtext': 'Japanese / locale text (not implemented)',
+    'romanhankaku': 'Japanese / locale text (not implemented)',
+    'romanzenkaku': 'Japanese / locale text (not implemented)',
+    'yearname': 'Japanese / locale text (not implemented)',
+    # cryptographic / binary output
+    'cryptauthcode': 'cryptographic / binary output',
+    'cryptdecrypt': 'cryptographic / binary output',
+    'cryptdecryptbase64': 'cryptographic / binary output',
+    'cryptdigest': 'cryptographic / binary output',
+    'cryptencrypt': 'cryptographic / binary output',
+    'cryptencryptbase64': 'cryptographic / binary output',
+    'cryptgeneratesignature': 'cryptographic / binary output',
+    'cryptverifysignature': 'cryptographic / binary output',
+    # manipulates styled-text runs (not modeled)
+    'getascss': 'manipulates styled-text runs (not modeled)',
+    'getassvg': 'manipulates styled-text runs (not modeled)',
+    'textcolor': 'manipulates styled-text runs (not modeled)',
+    'textcolorremove': 'manipulates styled-text runs (not modeled)',
+    'textfont': 'manipulates styled-text runs (not modeled)',
+    'textfontremove': 'manipulates styled-text runs (not modeled)',
+    'textformatremove': 'manipulates styled-text runs (not modeled)',
+    'textsize': 'manipulates styled-text runs (not modeled)',
+    'textsizeremove': 'manipulates styled-text runs (not modeled)',
+    'textstyleadd': 'manipulates styled-text runs (not modeled)',
+    'textstyleremove': 'manipulates styled-text runs (not modeled)',
+    # needs a device
+    'getsensor': 'needs a device', 'location': 'needs a device',
+    'locationvalues': 'needs a device', 'rangebeacons': 'needs a device',
+    # needs a record or found set
+    'extend': 'needs a record or found set', 'getfield': 'needs a record or found set',
+    'getnthrecord': 'needs a record or found set',
+    'getrecordidsfromfoundset': 'needs a record or found set',
+    'getrepetition': 'needs a record or found set',
+    'getsummary': 'needs a record or found set', 'last': 'needs a record or found set',
+    'lookup': 'needs a record or found set', 'lookupnext': 'needs a record or found set',
+    # needs an AI model or account
+    'addembeddings': 'needs an AI model or account',
+    'computemodel': 'needs an AI model or account',
+    'cosinesimilarity': 'needs an AI model or account',
+    'getembedding': 'needs an AI model or account',
+    'getembeddingasfile': 'needs an AI model or account',
+    'getembeddingastext': 'needs an AI model or account',
+    'getmodelattributes': 'needs an AI model or account',
+    'getragspaceinfo': 'needs an AI model or account',
+    'gettokencount': 'needs an AI model or account',
+    'normalizeembedding': 'needs an AI model or account',
+    'predictfrommodel': 'needs an AI model or account',
+    'subtractembeddings': 'needs an AI model or account',
+    # needs runtime state
+    'getaddoninfo': 'needs runtime state',
+    # needs the database engine
+    'executesql': 'needs the database engine', 'executesqle': 'needs the database engine',
+    # needs the database schema
+    'basetableids': 'needs the database schema', 'basetablenames': 'needs the database schema',
+    'databasenames': 'needs the database schema', 'fieldbounds': 'needs the database schema',
+    'fieldcomment': 'needs the database schema', 'fieldids': 'needs the database schema',
+    'fieldnames': 'needs the database schema', 'fieldrepetitions': 'needs the database schema',
+    'fieldstyle': 'needs the database schema', 'fieldtype': 'needs the database schema',
+    'getbasetablename': 'needs the database schema',
+    'getfieldname': 'needs the database schema',
+    'getfieldsonlayout': 'needs the database schema',
+    'getlayoutobjectattribute': 'needs the database schema',
+    'getlayoutobjectownerinfo': 'needs the database schema',
+    'getnextserialvalue': 'needs the database schema',
+    'gettableddl': 'needs the database schema', 'layoutids': 'needs the database schema',
+    'layoutnames': 'needs the database schema',
+    'layoutobjectnames': 'needs the database schema',
+    'layoutobjectuuid': 'needs the database schema',
+    'relationinfo': 'needs the database schema', 'scriptids': 'needs the database schema',
+    'scriptnames': 'needs the database schema', 'tableids': 'needs the database schema',
+    'tablenames': 'needs the database schema', 'valuelistids': 'needs the database schema',
+    'valuelistitems': 'needs the database schema',
+    'valuelistnames': 'needs the database schema',
+    # not implemented yet
+    'base64encoderfc': 'not implemented yet', 'lg': 'not implemented yet',
+    # operates on container (binary) data
+    'getavplayerattribute': 'operates on container (binary) data',
+    'getcontainerattribute': 'operates on container (binary) data',
+    'getheight': 'operates on container (binary) data',
+    'getlivetext': 'operates on container (binary) data',
+    'getlivetextasjson': 'operates on container (binary) data',
+    'gettextfrompdf': 'operates on container (binary) data',
+    'getthumbnail': 'operates on container (binary) data',
+    'getwidth': 'operates on container (binary) data',
+    'readqrcode': 'operates on container (binary) data',
+    'verifycontainer': 'operates on container (binary) data',
+    # returns FileMaker error codes (not modeled)
+    'evaluationerror': 'returns FileMaker error codes (not modeled)',
+    # text encoding by name (not implemented)
+    'textdecode': 'text encoding by name (not implemented)',
+    'textencode': 'text encoding by name (not implemented)',
 }
 
 
@@ -1831,15 +2391,16 @@ def display(v):
     return as_text(v)
 
 
-def eval_source(src, params=None, vars=None, library=None):
+def eval_source(src, params=None, vars=None, library=None, getvals=None):
     """Parse and evaluate calc source text. `params` may be a dict of
-    name->value, `vars` a dict of $name->value. Returns a Python value
-    (str or Decimal); use display() for the text form."""
+    name->value, `vars` a dict of $name->value, `getvals` a dict of Get()
+    selector->value. Returns a Python value (str or Decimal); display() for text."""
     names = {}
     if params:
         for k, val in params.items():
             names[k.lower()] = val if isinstance(val, (str, Decimal)) else str(val)
-    env = Env(names=names, vars=dict(vars or {}), library=library or {})
+    env = Env(names=names, vars=dict(vars or {}), library=library or {},
+              getvals={k.lower(): v for k, v in (getvals or {}).items()})
     return evaluate(parse(src), env)
 
 
@@ -1902,6 +2463,8 @@ def load_doc_examples(skills_dir):
             if " when " in line.lower() or " field " in line.lower():
                 continue                          # references a field -> not pure
             for expr, result in _EXAMPLE_RE.findall(line):
+                if re.search(r"\bget\s*\(", expr, re.IGNORECASE):
+                    continue                      # Get(): runtime state, not reproducible
                 cases.append((expr.strip(), result.strip(), fn))
     return cases
 
@@ -1994,6 +2557,7 @@ _USAGE = (
     'usage:\n'
     '  fmeval.py \'<calc>\'                 evaluate a calculation\n'
     '  fmeval.py --param N=v \'<calc>\'      evaluate with parameter(s); repeatable\n'
+    '  fmeval.py --get Sel=v \'<calc>\'      set a Get() selector (else empty); repeatable\n'
     '  fmeval.py --trace \'<calc>\'          print each Let/While binding (debugging)\n'
     '  fmeval.py --trace-every N \'<calc>\'  trace, but only every Nth While iteration\n'
     '  fmeval.py --test <file.tsv>         run expr<TAB>expected cases (verify)\n'
@@ -2034,6 +2598,7 @@ def main(argv=None):
     trace = False
     trace_every = 1
     params = {}
+    getvals = {}
     src = None
     i = 0
     while i < len(argv):
@@ -2052,6 +2617,10 @@ def main(argv=None):
             key, _, val = argv[i + 1].partition("=")
             params[key.strip().lower()] = val
             i += 2
+        elif a == "--get" and i + 1 < len(argv):
+            key, _, val = argv[i + 1].partition("=")
+            getvals[key.strip().lower()] = val
+            i += 2
         else:
             src = a                                # last non-flag operand wins
             i += 1
@@ -2060,7 +2629,8 @@ def main(argv=None):
         return 2
     tr = [] if trace else None
     try:
-        env = Env(names=dict(params), trace=tr, trace_every=trace_every)
+        env = Env(names=dict(params), trace=tr, trace_every=trace_every,
+                  getvals=getvals)
         result = evaluate(parse(src), env)
     except EvalUnsupported as e:
         print("unsupported: %s" % e)
