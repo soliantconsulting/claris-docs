@@ -7,7 +7,7 @@
 - [Enabling plug-ins](https://help.claris.com/markdown/en/server-help/plugins-fmse.md)
 - [Folders for plug-in files](https://help.claris.com/markdown/en/server-help/plugins-folders.md)
 - [Managing plug-ins](https://help.claris.com/markdown/en/server-help/plugins-manage.md)
-- [Changing plug-in file permissions (macOS)](https://help.claris.com/markdown/en/server-help/plugins-permissions-macos.md)
+- [Changing plug-in file permissions (macOS, Linux)](https://help.claris.com/markdown/en/server-help/plugins-permissions-macos.md)
 - [Enabling the Install Plug-In File script step to update plug-ins](https://help.claris.com/markdown/en/server-help/plugins-script-step.md)
 - [Admin Console problems](https://help.claris.com/markdown/en/server-help/trouble-admin-console.md)
 - [Problems seen by clients](https://help.claris.com/markdown/en/server-help/trouble-clients.md)

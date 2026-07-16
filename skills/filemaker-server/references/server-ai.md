@@ -3,8 +3,12 @@
 # FileMaker Server Help — AI Services
 
 
+- [Chatting with AI models](https://help.claris.com/markdown/en/server-help/config-ai-chat.md)
 - [Creating AI fine-tuned models](https://help.claris.com/markdown/en/server-help/config-ai-fine-tuned-models.md)
 - [Creating AI API keys](https://help.claris.com/markdown/en/server-help/config-ai-keys.md)
-- [Enabling the AI model server](https://help.claris.com/markdown/en/server-help/config-ai-model-server.md)
+- [Starting, stopping, and updating the AI model server](https://help.claris.com/markdown/en/server-help/config-ai-model-server.md)
 - [Downloading AI models](https://help.claris.com/markdown/en/server-help/config-ai-models.md)
+- [Perform RAG Sync](https://help.claris.com/markdown/en/server-help/config-ai-rag-sync.md)
+- [Viewing AI requests](https://help.claris.com/markdown/en/server-help/config-ai-requests.md)
 - [Configuring AI services](https://help.claris.com/markdown/en/server-help/config-ai-services.md)
+- [Configuring AI settings](https://help.claris.com/markdown/en/server-help/config-ai-settings.md)

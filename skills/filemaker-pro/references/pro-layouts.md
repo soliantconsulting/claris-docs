@@ -63,7 +63,7 @@
 - [About layout part types](https://help.claris.com/markdown/en/pro-help/layout-part-types.md)
 - [Working with layout parts](https://help.claris.com/markdown/en/pro-help/layout-parts.md)
 - [Reordering and excluding layouts in the Layout pop-up menu](https://help.claris.com/markdown/en/pro-help/layout-pop-up-menu.md)
-- [Changing layout settings](https://help.claris.com/markdown/en/pro-help/layout-preferences.md)
+- [Changing schema settings](https://help.claris.com/markdown/en/pro-help/layout-preferences.md)
 - [Working with the layout tools](https://help.claris.com/markdown/en/pro-help/layout-tools.md)
 - [About layout types](https://help.claris.com/markdown/en/pro-help/layout-types.md)
 - [Creating and managing layouts and reports](https://help.claris.com/markdown/en/pro-help/layouts-and-reports.md)

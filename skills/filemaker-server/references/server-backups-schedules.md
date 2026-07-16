@@ -3,7 +3,7 @@
 # FileMaker Server Help — Backups & Schedules
 
 
-- [Understanding backup options](https://help.claris.com/markdown/en/server-help/config-backup-about.md)
+- [Understanding local backup options](https://help.claris.com/markdown/en/server-help/config-backup-about.md)
 - [Using the Auto-Backup and On-Demand tab](https://help.claris.com/markdown/en/server-help/config-backup-auto-on-demand.md)
 - [Using the Preserved tab](https://help.claris.com/markdown/en/server-help/config-backup-preserved.md)
 - [Restoring a database from a progressive backup](https://help.claris.com/markdown/en/server-help/config-restore-progressive.md)
@@ -15,7 +15,7 @@
 - [Creating or changing a schedule](https://help.claris.com/markdown/en/server-help/schedule-create-script.md)
 - [Creating script sequence tasks](https://help.claris.com/markdown/en/server-help/schedule-create-sequence.md)
 - [Tips for scheduled database backups](https://help.claris.com/markdown/en/server-help/schedule-db-backup-tips.md)
-- [Scheduling database backups](https://help.claris.com/markdown/en/server-help/schedule-db-backup.md)
+- [Scheduling local database backups](https://help.claris.com/markdown/en/server-help/schedule-db-backup.md)
 - [Restoring a database file from scheduled backups](https://help.claris.com/markdown/en/server-help/schedule-db-restore.md)
 - [Verifying the integrity of databases](https://help.claris.com/markdown/en/server-help/schedule-db-verify.md)
 - [About keeping multiple backups in a backup schedule](https://help.claris.com/markdown/en/server-help/schedule-multiple-backups.md)

@@ -29,6 +29,7 @@
 - [Inviting users to a team using a CSV file](https://help.claris.com/markdown/en/customer-console-help/invite-user-csv.md)
 - [Inviting users to a team](https://help.claris.com/markdown/en/customer-console-help/invite-user.md)
 - [Managing hosts (FileMaker Cloud)](https://help.claris.com/markdown/en/customer-console-help/manage-host.md)
+- [Managing remote backup (FileMaker Server)](https://help.claris.com/markdown/en/customer-console-help/manage-remote-backup-server.md)
 - [Managing subscriptions (FileMaker Cloud)](https://help.claris.com/markdown/en/customer-console-help/manage-subscription-cloud.md)
 - [Managing subscriptions (Claris Connect)](https://help.claris.com/markdown/en/customer-console-help/manage-subscription-connect.md)
 - [Managing subscriptions (FileMaker Server)](https://help.claris.com/markdown/en/customer-console-help/manage-subscription-server.md)

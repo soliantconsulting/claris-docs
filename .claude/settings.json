@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 update.py snapshots/tests/test_*.txt)",
+      "Bash(python3 update.py)",
+      "Bash(python3 tests/generate_fixtures.py)"
+    ]
+  }
+}

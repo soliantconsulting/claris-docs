@@ -1,0 +1,64 @@
+name: Weekly Docs Update
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"   # Every Monday at 06:00 UTC
+  workflow_dispatch:       # Allow manual trigger
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+
+      - name: Run update.py
+        run: python update.py
+
+      - name: Check for changes
+        id: changes
+        run: |
+          git add -A
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Bump patch version
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          python - <<'EOF'
+          import re, pathlib
+
+          p = pathlib.Path(".claude-plugin/plugin.json")
+          text = p.read_text(encoding="utf-8")
+
+          match = re.search(r'"version":\s*"(v?)(\d+)\.(\d+)\.(\d+)"', text)
+          if not match:
+              raise ValueError("version field not found in plugin.json")
+
+          prefix, major, minor, patch = match.group(1), match.group(2), match.group(3), match.group(4)
+          old_ver = f"{prefix}{major}.{minor}.{patch}"
+          new_ver = f"{prefix}{major}.{minor}.{int(patch) + 1}"
+
+          p.write_text(text.replace(f'"version": "{old_ver}"', f'"version": "{new_ver}"'), encoding="utf-8")
+          print(f"Version bumped: {old_ver} -> {new_ver}")
+          EOF
+          git add .claude-plugin/plugin.json
+
+      - name: Commit and push
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          NEW_VER=$(python -c "import json; print(json.load(open('.claude-plugin/plugin.json'))['version'])")
+          CHANGED_SKILLS=$(git diff --cached --name-only | grep '^skills/' | sed 's|skills/||;s|/.*||' | sort -u | tr '\n' ',' | sed 's/,$//')
+          git commit -m "chore: weekly docs update — v${NEW_VER}" -m "Updated: ${CHANGED_SKILLS}"
+          git push

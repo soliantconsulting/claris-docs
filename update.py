@@ -939,8 +939,23 @@ def write_reference_file(skill_name, ref_filename, links, section_title):
     return ref_path
 
 
+def collect_existing_reference_files():
+    """Return a set of all existing reference file paths across all skills."""
+    existing = set()
+    for ref_file in SKILLS_DIR.glob("*/references/*.md"):
+        existing.add(ref_file)
+    return existing
+
+
 def main():
     local_path = sys.argv[1] if len(sys.argv) > 1 else None
+    live_run = local_path is None
+
+    # Snapshot existing files before writing so we can detect stale ones.
+    # Only do this on live runs — local snapshot runs are partial by design
+    # and would incorrectly flag unrelated reference files for deletion.
+    existing_before = collect_existing_reference_files() if live_run else set()
+
     text = fetch_llms_full(local_path)
     sections = parse_english_sections(text)
 
@@ -948,6 +963,7 @@ def main():
 
     # Track what we write for summary
     written = {}
+    written_paths = set()
     unmapped = []
 
     for header, links in sections.items():
@@ -969,15 +985,25 @@ def main():
                 buckets[file_key].append(link)
 
             for (sub_filename, sub_title), sub_links in buckets.items():
-                write_reference_file(skill_name, sub_filename, sub_links, sub_title)
+                ref_path = write_reference_file(skill_name, sub_filename, sub_links, sub_title)
+                written_paths.add(ref_path)
                 if skill_name not in written:
                     written[skill_name] = []
                 written[skill_name].append((sub_filename, len(sub_links)))
         else:
             ref_path = write_reference_file(skill_name, ref_filename, links, header)
+            written_paths.add(ref_path)
             if skill_name not in written:
                 written[skill_name] = []
             written[skill_name].append((ref_filename, len(links)))
+
+    # Remove stale reference files (live runs only)
+    stale = existing_before - written_paths
+    if stale:
+        print(f"\nRemoving {len(stale)} stale reference file(s):")
+        for stale_path in sorted(stale):
+            stale_path.unlink()
+            print(f"  Removed: {stale_path.relative_to(REPO_ROOT)}")
 
     # Summary
     print(f"\nWrote reference files for {len(written)} skills:")
