@@ -19,4 +19,7 @@
 - [Uninstalling FileMaker Pro (macOS)](https://help.claris.com/markdown/en/pro-installation-guide/uninstalling-pro-macos.md)
 - [Uninstalling FileMaker Pro (Windows)](https://help.claris.com/markdown/en/pro-installation-guide/uninstalling-pro-windows.md)
 - [Update notifications](https://help.claris.com/markdown/en/pro-installation-guide/update-notifications.md)
-- [Upgrading FileMaker Pro from a previous version](https://help.claris.com/markdown/en/pro-installation-guide/upgrading-from-previous-version.md)
+- [About upgrading FileMaker Pro from a previous version](https://help.claris.com/markdown/en/pro-installation-guide/upgrading-from-previous-version.md)
+- [Upgrading FileMaker Pro (macOS)](https://help.claris.com/markdown/en/pro-installation-guide/upgrading-pro-macos.md)
+- [Upgrading FileMaker Pro (Windows)](https://help.claris.com/markdown/en/pro-installation-guide/upgrading-pro-windows.md)
+- [Ways to install or upgrade FileMaker Pro](https://help.claris.com/markdown/en/pro-installation-guide/ways-to-install-or-upgrade.md)

@@ -6,7 +6,7 @@
 - [About the license certificate file](https://help.claris.com/markdown/en/pro-network-install-setup-guide/about-license-certificate.md)
 - [About the personalization file](https://help.claris.com/markdown/en/pro-network-install-setup-guide/about-personalization-file.md)
 - [Creating a customized FileMaker Pro .pkg file (macOS)](https://help.claris.com/markdown/en/pro-network-install-setup-guide/creating-customized-pkg-macos.md)
-- [Deploying your customized FileMaker Pro .pkg file (macOS)](https://help.claris.com/markdown/en/pro-network-install-setup-guide/deploying-customized-pkg-macos.md)
+- [Deploying a FileMaker Pro .pkg file (macOS)](https://help.claris.com/markdown/en/pro-network-install-setup-guide/deploying-customized-pkg-macos.md)
 - [Claris FileMaker Pro Network Install Setup Guide](https://help.claris.com/markdown/en/pro-network-install-setup-guide/index.md)
 - [About installing the required Microsoft components (Windows)](https://help.claris.com/markdown/en/pro-network-install-setup-guide/install-required-components-windows.md)
 - [About installing Bonjour (Windows)](https://help.claris.com/markdown/en/pro-network-install-setup-guide/installing-bonjour-windows.md)

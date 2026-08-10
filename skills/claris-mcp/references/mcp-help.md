@@ -7,7 +7,7 @@
 - [Best practices](https://help.claris.com/markdown/en/claris-mcp-help/best-practices.md)
 - [Claude Desktop](https://help.claris.com/markdown/en/claris-mcp-help/claude-desktop.md)
 - [Getting started](https://help.claris.com/markdown/en/claris-mcp-help/getting-started.md)
-- [Introduction to Claris MCP](https://help.claris.com/markdown/en/claris-mcp-help/index.md)
+- [Claris MCP Help](https://help.claris.com/markdown/en/claris-mcp-help/index.md)
 - [Configuring your integration](https://help.claris.com/markdown/en/claris-mcp-help/integration-configuration.md)
 - [Managing connections](https://help.claris.com/markdown/en/claris-mcp-help/managing-connections.md)
 - [Tools guide](https://help.claris.com/markdown/en/claris-mcp-help/tools-guide.md)
