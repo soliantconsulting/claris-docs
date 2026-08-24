@@ -3,13 +3,13 @@
 # FileMaker Pro — JSON Functions
 
 
-- [JSONDeleteElement](https://help.claris.com/markdown/en/pro-help/jsondeleteelement.md)
-- [JSONFormatElements](https://help.claris.com/markdown/en/pro-help/jsonformatelements.md)
-- [JSONGetElement](https://help.claris.com/markdown/en/pro-help/jsongetelement.md)
-- [JSONGetElementType](https://help.claris.com/markdown/en/pro-help/jsongetelementtype.md)
-- [JSONListKeys](https://help.claris.com/markdown/en/pro-help/jsonlistkeys.md)
-- [JSONListValues](https://help.claris.com/markdown/en/pro-help/jsonlistvalues.md)
-- [JSONMakeArray](https://help.claris.com/markdown/en/pro-help/jsonmakearray.md)
-- [JSONParse](https://help.claris.com/markdown/en/pro-help/jsonparse.md)
-- [JSONParsedState](https://help.claris.com/markdown/en/pro-help/jsonparsedstate.md)
-- [JSONSetElement](https://help.claris.com/markdown/en/pro-help/jsonsetelement.md)
+- [JSONDeleteElement](https://help.claris.com/markdown/en/pro-help/jsondeleteelement.md) (modified: 2023-04-24T17:12-07:00)
+- [JSONFormatElements](https://help.claris.com/markdown/en/pro-help/jsonformatelements.md) (modified: 2023-04-24T17:12-07:00)
+- [JSONGetElement](https://help.claris.com/markdown/en/pro-help/jsongetelement.md) (modified: 2024-06-04T08:10-07:00)
+- [JSONGetElementType](https://help.claris.com/markdown/en/pro-help/jsongetelementtype.md) (modified: 2026-08-05T10:52-07:00)
+- [JSONListKeys](https://help.claris.com/markdown/en/pro-help/jsonlistkeys.md) (modified: 2023-04-24T17:12-07:00)
+- [JSONListValues](https://help.claris.com/markdown/en/pro-help/jsonlistvalues.md) (modified: 2023-04-24T17:12-07:00)
+- [JSONMakeArray](https://help.claris.com/markdown/en/pro-help/jsonmakearray.md) (modified: 2024-06-04T08:10-07:00)
+- [JSONParse](https://help.claris.com/markdown/en/pro-help/jsonparse.md) (modified: 2025-08-04T17:05-07:00)
+- [JSONParsedState](https://help.claris.com/markdown/en/pro-help/jsonparsedstate.md) (modified: 2025-08-04T17:05-07:00)
+- [JSONSetElement](https://help.claris.com/markdown/en/pro-help/jsonsetelement.md) (modified: 2025-07-08T08:33-07:00)

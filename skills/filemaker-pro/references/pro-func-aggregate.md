@@ -3,13 +3,13 @@
 # FileMaker Pro — Aggregate Functions
 
 
-- [Average](https://help.claris.com/markdown/en/pro-help/average.md)
-- [Count](https://help.claris.com/markdown/en/pro-help/count.md)
-- [List](https://help.claris.com/markdown/en/pro-help/list.md)
-- [Max](https://help.claris.com/markdown/en/pro-help/max.md)
-- [Min](https://help.claris.com/markdown/en/pro-help/min.md)
-- [StDev](https://help.claris.com/markdown/en/pro-help/stdev.md)
-- [StDevP](https://help.claris.com/markdown/en/pro-help/stdevp.md)
-- [Sum](https://help.claris.com/markdown/en/pro-help/sum.md)
-- [Variance](https://help.claris.com/markdown/en/pro-help/variance.md)
-- [VarianceP](https://help.claris.com/markdown/en/pro-help/variancep.md)
+- [Average](https://help.claris.com/markdown/en/pro-help/average.md) (modified: 2023-04-24T17:12-07:00)
+- [Count](https://help.claris.com/markdown/en/pro-help/count.md) (modified: 2023-04-24T17:12-07:00)
+- [List](https://help.claris.com/markdown/en/pro-help/list.md) (modified: 2023-04-24T17:12-07:00)
+- [Max](https://help.claris.com/markdown/en/pro-help/max.md) (modified: 2023-04-24T17:12-07:00)
+- [Min](https://help.claris.com/markdown/en/pro-help/min.md) (modified: 2023-04-24T17:12-07:00)
+- [StDev](https://help.claris.com/markdown/en/pro-help/stdev.md) (modified: 2023-04-24T17:12-07:00)
+- [StDevP](https://help.claris.com/markdown/en/pro-help/stdevp.md) (modified: 2023-04-24T17:12-07:00)
+- [Sum](https://help.claris.com/markdown/en/pro-help/sum.md) (modified: 2023-04-24T17:12-07:00)
+- [Variance](https://help.claris.com/markdown/en/pro-help/variance.md) (modified: 2023-04-24T17:12-07:00)
+- [VarianceP](https://help.claris.com/markdown/en/pro-help/variancep.md) (modified: 2023-04-24T17:12-07:00)

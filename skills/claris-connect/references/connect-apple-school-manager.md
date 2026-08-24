@@ -3,10 +3,10 @@
 # Claris Connect for Apple School Manager Guide
 
 
-- [Creating your flow in Claris Connect](https://help.claris.com/markdown/en/connect-apple-school-manager-guide/create-daily-sis-sync-csv-upload-flow.md)
-- [Reviewing flow history](https://help.claris.com/markdown/en/connect-apple-school-manager-guide/flow-history.md)
-- [Reviewing flow steps](https://help.claris.com/markdown/en/connect-apple-school-manager-guide/flow-review.md)
-- [Claris Connect for Apple School Manager User Guide](https://help.claris.com/markdown/en/connect-apple-school-manager-guide/index.md)
-- [Resolving data errors](https://help.claris.com/markdown/en/connect-apple-school-manager-guide/resolving-errors.md)
-- [Signing up and creating a team](https://help.claris.com/markdown/en/connect-apple-school-manager-guide/sign-up-create-team.md)
-- [Using Claris Connect](https://help.claris.com/markdown/en/connect-apple-school-manager-guide/using-claris-connect.md)
+- [Creating your flow in Claris Connect](https://help.claris.com/markdown/en/connect-apple-school-manager-guide/create-daily-sis-sync-csv-upload-flow.md) (modified: 2024-09-26T10:43-07:00)
+- [Reviewing flow history](https://help.claris.com/markdown/en/connect-apple-school-manager-guide/flow-history.md) (modified: 2024-09-10T12:46-07:00)
+- [Reviewing flow steps](https://help.claris.com/markdown/en/connect-apple-school-manager-guide/flow-review.md) (modified: 2023-02-06T11:35-08:00)
+- [Claris Connect for Apple School Manager User Guide](https://help.claris.com/markdown/en/connect-apple-school-manager-guide/index.md) (modified: 2024-09-10T12:46-07:00)
+- [Resolving data errors](https://help.claris.com/markdown/en/connect-apple-school-manager-guide/resolving-errors.md) (modified: 2024-09-10T12:46-07:00)
+- [Signing up and creating a team](https://help.claris.com/markdown/en/connect-apple-school-manager-guide/sign-up-create-team.md) (modified: 2024-09-26T10:43-07:00)
+- [Using Claris Connect](https://help.claris.com/markdown/en/connect-apple-school-manager-guide/using-claris-connect.md) (modified: 2024-09-26T10:43-07:00)

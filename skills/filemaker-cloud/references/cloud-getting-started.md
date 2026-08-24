@@ -3,10 +3,10 @@
 # Claris FileMaker Cloud Getting Started Guide
 
 
-- [FileMaker Cloud security features](https://help.claris.com/markdown/en/cloud-getting-started-guide/cloud-security.md)
-- [Download the license certificate and FileMaker software](https://help.claris.com/markdown/en/cloud-getting-started-guide/download-license-and-software.md)
-- [Claris FileMaker Cloud Getting Started Guide](https://help.claris.com/markdown/en/cloud-getting-started-guide/index.md)
-- [Migrate from FileMaker Server to FileMaker Cloud](https://help.claris.com/markdown/en/cloud-getting-started-guide/move-databases-to-filemaker-cloud.md)
-- [Ports used by FileMaker Cloud](https://help.claris.com/markdown/en/cloud-getting-started-guide/ports-used-by-filemaker-cloud.md)
-- [Purchase a FileMaker Cloud subscription](https://help.claris.com/markdown/en/cloud-getting-started-guide/purchase-cloud-subscription.md)
-- [Set up FileMaker Cloud](https://help.claris.com/markdown/en/cloud-getting-started-guide/set-up-filemaker-cloud.md)
+- [FileMaker Cloud security features](https://help.claris.com/markdown/en/cloud-getting-started-guide/cloud-security.md) (modified: 2023-09-28T13:02-07:00)
+- [Download the license certificate and FileMaker software](https://help.claris.com/markdown/en/cloud-getting-started-guide/download-license-and-software.md) (modified: 2023-09-28T13:02-07:00)
+- [Claris FileMaker Cloud Getting Started Guide](https://help.claris.com/markdown/en/cloud-getting-started-guide/index.md) (modified: 2025-12-12T16:22-08:00)
+- [Migrate from FileMaker Server to FileMaker Cloud](https://help.claris.com/markdown/en/cloud-getting-started-guide/move-databases-to-filemaker-cloud.md) (modified: 2025-12-12T16:22-08:00)
+- [Ports used by FileMaker Cloud](https://help.claris.com/markdown/en/cloud-getting-started-guide/ports-used-by-filemaker-cloud.md) (modified: 2023-09-28T13:02-07:00)
+- [Purchase a FileMaker Cloud subscription](https://help.claris.com/markdown/en/cloud-getting-started-guide/purchase-cloud-subscription.md) (modified: 2023-09-28T13:02-07:00)
+- [Set up FileMaker Cloud](https://help.claris.com/markdown/en/cloud-getting-started-guide/set-up-filemaker-cloud.md) (modified: 2022-01-04T10:27-08:00)

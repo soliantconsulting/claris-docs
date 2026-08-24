@@ -3,11 +3,11 @@
 # FileMaker Pro — Editing Script Steps
 
 
-- [Clear](https://help.claris.com/markdown/en/pro-help/clear.md)
-- [Copy](https://help.claris.com/markdown/en/pro-help/copy.md)
-- [Cut](https://help.claris.com/markdown/en/pro-help/cut.md)
-- [Paste](https://help.claris.com/markdown/en/pro-help/paste.md)
-- [Perform Find/Replace](https://help.claris.com/markdown/en/pro-help/perform-find-replace.md)
-- [Select All](https://help.claris.com/markdown/en/pro-help/select-all.md)
-- [Set Selection](https://help.claris.com/markdown/en/pro-help/set-selection.md)
-- [Undo/Redo](https://help.claris.com/markdown/en/pro-help/undo-redo.md)
+- [Clear](https://help.claris.com/markdown/en/pro-help/clear.md) (modified: 2020-10-19T14:43-07:00)
+- [Copy](https://help.claris.com/markdown/en/pro-help/copy.md) (modified: 2024-11-06T08:49-08:00)
+- [Cut](https://help.claris.com/markdown/en/pro-help/cut.md) (modified: 2024-11-06T08:49-08:00)
+- [Paste](https://help.claris.com/markdown/en/pro-help/paste.md) (modified: 2024-06-04T08:10-07:00)
+- [Perform Find/Replace](https://help.claris.com/markdown/en/pro-help/perform-find-replace.md) (modified: 2024-06-04T08:10-07:00)
+- [Select All](https://help.claris.com/markdown/en/pro-help/select-all.md) (modified: 2020-10-19T14:43-07:00)
+- [Set Selection](https://help.claris.com/markdown/en/pro-help/set-selection.md) (modified: 2020-10-19T14:43-07:00)
+- [Undo/Redo](https://help.claris.com/markdown/en/pro-help/undo-redo.md) (modified: 2020-10-19T14:43-07:00)

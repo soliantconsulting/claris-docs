@@ -3,4 +3,4 @@
 # Claris Connect Release Notes
 
 
-- [Claris Connect Release Notes](https://help.claris.com/markdown/en/connect-release-notes/index.md)
+- [Claris Connect Release Notes](https://help.claris.com/markdown/en/connect-release-notes/index.md) (modified: 2026-07-17T14:37-07:00)

@@ -3,4 +3,4 @@
 # Claris FileMaker Go Release Notes
 
 
-- [Claris FileMaker Go Release Notes](https://help.claris.com/markdown/en/go-release-notes/index.md)
+- [Claris FileMaker Go Release Notes](https://help.claris.com/markdown/en/go-release-notes/index.md) (modified: 2026-08-05T10:52-07:00)

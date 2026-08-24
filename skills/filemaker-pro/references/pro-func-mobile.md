@@ -3,8 +3,8 @@
 # FileMaker Pro — Mobile Functions
 
 
-- [GetAVPlayerAttribute](https://help.claris.com/markdown/en/pro-help/getavplayerattribute.md)
-- [GetSensor](https://help.claris.com/markdown/en/pro-help/getsensor.md)
-- [Location](https://help.claris.com/markdown/en/pro-help/location.md)
-- [LocationValues](https://help.claris.com/markdown/en/pro-help/locationvalues.md)
-- [RangeBeacons](https://help.claris.com/markdown/en/pro-help/rangebeacons.md)
+- [GetAVPlayerAttribute](https://help.claris.com/markdown/en/pro-help/getavplayerattribute.md) (modified: 2024-06-04T08:10-07:00)
+- [GetSensor](https://help.claris.com/markdown/en/pro-help/getsensor.md) (modified: 2023-04-24T17:12-07:00)
+- [Location](https://help.claris.com/markdown/en/pro-help/location.md) (modified: 2024-06-04T08:10-07:00)
+- [LocationValues](https://help.claris.com/markdown/en/pro-help/locationvalues.md) (modified: 2024-06-04T08:10-07:00)
+- [RangeBeacons](https://help.claris.com/markdown/en/pro-help/rangebeacons.md) (modified: 2023-04-24T17:12-07:00)

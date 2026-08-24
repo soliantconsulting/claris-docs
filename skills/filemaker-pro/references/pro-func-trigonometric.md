@@ -3,12 +3,12 @@
 # FileMaker Pro — Trigonometric Functions
 
 
-- [Acos](https://help.claris.com/markdown/en/pro-help/acos.md)
-- [Asin](https://help.claris.com/markdown/en/pro-help/asin.md)
-- [Atan](https://help.claris.com/markdown/en/pro-help/atan.md)
-- [Cos](https://help.claris.com/markdown/en/pro-help/cos.md)
-- [Degrees](https://help.claris.com/markdown/en/pro-help/degrees.md)
-- [Pi](https://help.claris.com/markdown/en/pro-help/pi.md)
-- [Radians](https://help.claris.com/markdown/en/pro-help/radians.md)
-- [Sin](https://help.claris.com/markdown/en/pro-help/sin.md)
-- [Tan](https://help.claris.com/markdown/en/pro-help/tan.md)
+- [Acos](https://help.claris.com/markdown/en/pro-help/acos.md) (modified: 2023-04-24T17:12-07:00)
+- [Asin](https://help.claris.com/markdown/en/pro-help/asin.md) (modified: 2023-04-24T17:12-07:00)
+- [Atan](https://help.claris.com/markdown/en/pro-help/atan.md) (modified: 2023-04-24T17:12-07:00)
+- [Cos](https://help.claris.com/markdown/en/pro-help/cos.md) (modified: 2023-04-24T17:12-07:00)
+- [Degrees](https://help.claris.com/markdown/en/pro-help/degrees.md) (modified: 2023-04-24T17:12-07:00)
+- [Pi](https://help.claris.com/markdown/en/pro-help/pi.md) (modified: 2023-04-24T17:12-07:00)
+- [Radians](https://help.claris.com/markdown/en/pro-help/radians.md) (modified: 2023-04-24T17:12-07:00)
+- [Sin](https://help.claris.com/markdown/en/pro-help/sin.md) (modified: 2023-04-24T17:12-07:00)
+- [Tan](https://help.claris.com/markdown/en/pro-help/tan.md) (modified: 2023-04-24T17:12-07:00)

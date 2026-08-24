@@ -3,13 +3,13 @@
 # FileMaker Pro — Printing & Previewing
 
 
-- [Specify Envelope Contents (New Layout/Report assistant)](https://help.claris.com/markdown/en/pro-help/envelope-contents.md)
-- [Controlling how layouts print](https://help.claris.com/markdown/en/pro-help/how-layouts-print.md)
-- [Preventing objects from printing](https://help.claris.com/markdown/en/pro-help/preventing-objects-from-printing.md)
-- [Previewing data on a layout](https://help.claris.com/markdown/en/pro-help/previewing-data.md)
-- [Previewing and printing information](https://help.claris.com/markdown/en/pro-help/previewing-printing.md)
-- [Setting up to print records in columns](https://help.claris.com/markdown/en/pro-help/print-records-columns.md)
-- [Specifying printer and paper options](https://help.claris.com/markdown/en/pro-help/printer-paper-options.md)
-- [Printing labels and envelopes](https://help.claris.com/markdown/en/pro-help/printing-labels.md)
-- [Printing records](https://help.claris.com/markdown/en/pro-help/printing-records.md)
-- [Printing table and field information](https://help.claris.com/markdown/en/pro-help/printing-table-field-information.md)
+- [Specify Envelope Contents (New Layout/Report assistant)](https://help.claris.com/markdown/en/pro-help/envelope-contents.md) (modified: 2023-04-24T17:12-07:00)
+- [Controlling how layouts print](https://help.claris.com/markdown/en/pro-help/how-layouts-print.md) (modified: 2023-04-24T17:12-07:00)
+- [Preventing objects from printing](https://help.claris.com/markdown/en/pro-help/preventing-objects-from-printing.md) (modified: 2023-04-24T17:12-07:00)
+- [Previewing data on a layout](https://help.claris.com/markdown/en/pro-help/previewing-data.md) (modified: 2026-06-09T08:48-07:00)
+- [Previewing and printing information](https://help.claris.com/markdown/en/pro-help/previewing-printing.md) (modified: 2023-04-24T17:12-07:00)
+- [Setting up to print records in columns](https://help.claris.com/markdown/en/pro-help/print-records-columns.md) (modified: 2021-03-12T11:08-08:00)
+- [Specifying printer and paper options](https://help.claris.com/markdown/en/pro-help/printer-paper-options.md) (modified: 2023-04-24T17:12-07:00)
+- [Printing labels and envelopes](https://help.claris.com/markdown/en/pro-help/printing-labels.md) (modified: 2023-04-24T17:12-07:00)
+- [Printing records](https://help.claris.com/markdown/en/pro-help/printing-records.md) (modified: 2023-04-24T17:12-07:00)
+- [Printing table and field information](https://help.claris.com/markdown/en/pro-help/printing-table-field-information.md) (modified: 2023-04-24T17:12-07:00)

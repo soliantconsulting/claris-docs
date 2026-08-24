@@ -3,12 +3,12 @@
 # Claris FileMaker Go Development Guide
 
 
-- [Behavior differences](https://help.claris.com/markdown/en/go-development-guide/behavior-differences.md)
-- [About file transfers](https://help.claris.com/markdown/en/go-development-guide/file-transfers.md)
-- [Differences between FileMaker Go and FileMaker Pro](https://help.claris.com/markdown/en/go-development-guide/go-pro-differences.md)
-- [Importing data in FileMaker Go](https://help.claris.com/markdown/en/go-development-guide/importing-data.md)
-- [Claris FileMaker Go Development Guide](https://help.claris.com/markdown/en/go-development-guide/index.md)
-- [Protecting files in FileMaker Go](https://help.claris.com/markdown/en/go-development-guide/protecting-files.md)
-- [Sharing FileMaker Pro files with FileMaker Go clients](https://help.claris.com/markdown/en/go-development-guide/sharing-with-go.md)
-- [Running scripts through Shortcuts and Siri](https://help.claris.com/markdown/en/go-development-guide/siri-shortcuts.md)
-- [Working with data in FileMaker Go](https://help.claris.com/markdown/en/go-development-guide/working-with-data.md)
+- [Behavior differences](https://help.claris.com/markdown/en/go-development-guide/behavior-differences.md) (modified: 2024-06-04T08:10-07:00)
+- [About file transfers](https://help.claris.com/markdown/en/go-development-guide/file-transfers.md) (modified: 2024-06-04T08:10-07:00)
+- [Differences between FileMaker Go and FileMaker Pro](https://help.claris.com/markdown/en/go-development-guide/go-pro-differences.md) (modified: 2024-06-04T08:10-07:00)
+- [Importing data in FileMaker Go](https://help.claris.com/markdown/en/go-development-guide/importing-data.md) (modified: 2024-06-04T08:10-07:00)
+- [Claris FileMaker Go Development Guide](https://help.claris.com/markdown/en/go-development-guide/index.md) (modified: 2024-06-04T08:10-07:00)
+- [Protecting files in FileMaker Go](https://help.claris.com/markdown/en/go-development-guide/protecting-files.md) (modified: 2024-06-04T08:10-07:00)
+- [Sharing FileMaker Pro files with FileMaker Go clients](https://help.claris.com/markdown/en/go-development-guide/sharing-with-go.md) (modified: 2024-06-04T08:10-07:00)
+- [Running scripts through Shortcuts and Siri](https://help.claris.com/markdown/en/go-development-guide/siri-shortcuts.md) (modified: 2022-01-04T10:27-08:00)
+- [Working with data in FileMaker Go](https://help.claris.com/markdown/en/go-development-guide/working-with-data.md) (modified: 2024-06-04T08:10-07:00)

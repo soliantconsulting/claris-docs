@@ -3,13 +3,13 @@
 # FileMaker Pro — Text Formatting Functions
 
 
-- [RGB](https://help.claris.com/markdown/en/pro-help/rgb.md)
-- [TextColor](https://help.claris.com/markdown/en/pro-help/textcolor.md)
-- [TextColorRemove](https://help.claris.com/markdown/en/pro-help/textcolorremove.md)
-- [TextFont](https://help.claris.com/markdown/en/pro-help/textfont.md)
-- [TextFontRemove](https://help.claris.com/markdown/en/pro-help/textfontremove.md)
-- [TextFormatRemove](https://help.claris.com/markdown/en/pro-help/textformatremove.md)
-- [TextSize](https://help.claris.com/markdown/en/pro-help/textsize.md)
-- [TextSizeRemove](https://help.claris.com/markdown/en/pro-help/textsizeremove.md)
-- [TextStyleAdd](https://help.claris.com/markdown/en/pro-help/textstyleadd.md)
-- [TextStyleRemove](https://help.claris.com/markdown/en/pro-help/textstyleremove.md)
+- [RGB](https://help.claris.com/markdown/en/pro-help/rgb.md) (modified: 2023-04-24T17:12-07:00)
+- [TextColor](https://help.claris.com/markdown/en/pro-help/textcolor.md) (modified: 2023-04-24T17:12-07:00)
+- [TextColorRemove](https://help.claris.com/markdown/en/pro-help/textcolorremove.md) (modified: 2023-04-24T17:12-07:00)
+- [TextFont](https://help.claris.com/markdown/en/pro-help/textfont.md) (modified: 2023-04-24T17:12-07:00)
+- [TextFontRemove](https://help.claris.com/markdown/en/pro-help/textfontremove.md) (modified: 2023-04-24T17:12-07:00)
+- [TextFormatRemove](https://help.claris.com/markdown/en/pro-help/textformatremove.md) (modified: 2023-04-24T17:12-07:00)
+- [TextSize](https://help.claris.com/markdown/en/pro-help/textsize.md) (modified: 2023-04-24T17:12-07:00)
+- [TextSizeRemove](https://help.claris.com/markdown/en/pro-help/textsizeremove.md) (modified: 2023-04-24T17:12-07:00)
+- [TextStyleAdd](https://help.claris.com/markdown/en/pro-help/textstyleadd.md) (modified: 2023-04-24T17:12-07:00)
+- [TextStyleRemove](https://help.claris.com/markdown/en/pro-help/textstyleremove.md) (modified: 2023-04-24T17:12-07:00)

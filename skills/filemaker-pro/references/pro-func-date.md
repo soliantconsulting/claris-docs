@@ -3,13 +3,13 @@
 # FileMaker Pro — Date Functions
 
 
-- [Date](https://help.claris.com/markdown/en/pro-help/date.md)
-- [Day](https://help.claris.com/markdown/en/pro-help/day.md)
-- [DayName](https://help.claris.com/markdown/en/pro-help/dayname.md)
-- [DayOfWeek](https://help.claris.com/markdown/en/pro-help/dayofweek.md)
-- [DayOfYear](https://help.claris.com/markdown/en/pro-help/dayofyear.md)
-- [Month](https://help.claris.com/markdown/en/pro-help/month.md)
-- [MonthName](https://help.claris.com/markdown/en/pro-help/monthname.md)
-- [WeekOfYear](https://help.claris.com/markdown/en/pro-help/weekofyear.md)
-- [WeekOfYearFiscal](https://help.claris.com/markdown/en/pro-help/weekofyearfiscal.md)
-- [Year](https://help.claris.com/markdown/en/pro-help/year.md)
+- [Date](https://help.claris.com/markdown/en/pro-help/date.md) (modified: 2023-04-24T17:12-07:00)
+- [Day](https://help.claris.com/markdown/en/pro-help/day.md) (modified: 2023-04-24T17:12-07:00)
+- [DayName](https://help.claris.com/markdown/en/pro-help/dayname.md) (modified: 2023-04-24T17:12-07:00)
+- [DayOfWeek](https://help.claris.com/markdown/en/pro-help/dayofweek.md) (modified: 2023-04-24T17:12-07:00)
+- [DayOfYear](https://help.claris.com/markdown/en/pro-help/dayofyear.md) (modified: 2023-04-24T17:12-07:00)
+- [Month](https://help.claris.com/markdown/en/pro-help/month.md) (modified: 2023-04-24T17:12-07:00)
+- [MonthName](https://help.claris.com/markdown/en/pro-help/monthname.md) (modified: 2023-04-24T17:12-07:00)
+- [WeekOfYear](https://help.claris.com/markdown/en/pro-help/weekofyear.md) (modified: 2024-11-06T08:49-08:00)
+- [WeekOfYearFiscal](https://help.claris.com/markdown/en/pro-help/weekofyearfiscal.md) (modified: 2023-04-24T17:12-07:00)
+- [Year](https://help.claris.com/markdown/en/pro-help/year.md) (modified: 2023-04-24T17:12-07:00)
