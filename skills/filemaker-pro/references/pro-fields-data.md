@@ -6,7 +6,7 @@
 - [Adding, duplicating, and deleting records](https://help.claris.com/markdown/en/pro-help/adding-duplicating-deleting-records.md) (modified: 2020-10-19T14:43-07:00)
 - [Adding and selecting table occurrences](https://help.claris.com/markdown/en/pro-help/adding-tables.md) (modified: 2024-11-06T08:49-08:00)
 - [Adding and viewing data](https://help.claris.com/markdown/en/pro-help/adding-viewing-data.md) (modified: 2023-04-24T17:12-07:00)
-- [Allowing or preventing entry into fields](https://help.claris.com/markdown/en/pro-help/allowing-preventing-field-entry.md) (modified: 2026-06-09T08:48-07:00)
+- [Allowing or preventing entry into fields](https://help.claris.com/markdown/en/pro-help/allowing-preventing-field-entry.md) (modified: 2026-08-26T09:37-07:00)
 - [Working with audio and video in interactive containers](https://help.claris.com/markdown/en/pro-help/audio-video-containers.md) (modified: 2023-04-24T17:12-07:00)
 - [Setting up a field to auto-complete during data entry](https://help.claris.com/markdown/en/pro-help/auto-complete.md) (modified: 2023-04-24T17:12-07:00)
 - [Defining automatic data entry](https://help.claris.com/markdown/en/pro-help/automatic-data-entry.md) (modified: 2024-11-06T08:49-08:00)

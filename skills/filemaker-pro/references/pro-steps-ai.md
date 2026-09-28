@@ -12,7 +12,7 @@
 - [Generate Response from Model](https://help.claris.com/markdown/en/pro-help/generate-response-from-model.md) (modified: 2026-06-09T08:48-07:00)
 - [Insert Embedding in Found Set](https://help.claris.com/markdown/en/pro-help/insert-embedding-in-found-set.md) (modified: 2026-06-09T08:48-07:00)
 - [Insert Embedding](https://help.claris.com/markdown/en/pro-help/insert-embedding.md) (modified: 2026-06-09T08:48-07:00)
-- [Perform Find by Natural Language](https://help.claris.com/markdown/en/pro-help/perform-find-by-natural-language.md) (modified: 2026-08-05T10:52-07:00)
+- [Perform Find by Natural Language](https://help.claris.com/markdown/en/pro-help/perform-find-by-natural-language.md) (modified: 2026-08-27T09:04-07:00)
 - [Perform RAG Action](https://help.claris.com/markdown/en/pro-help/perform-rag-action.md) (modified: 2026-06-09T08:48-07:00)
 - [Perform Semantic Find](https://help.claris.com/markdown/en/pro-help/perform-semantic-find.md) (modified: 2026-06-09T08:48-07:00)
 - [Perform SQL Query by Natural Language](https://help.claris.com/markdown/en/pro-help/perform-sql-query-by-natural-language.md) (modified: 2026-08-05T10:52-07:00)

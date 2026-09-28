@@ -5,7 +5,7 @@
 
 - [Before you configure your installation](https://help.claris.com/markdown/en/server-network-install-setup-guide/before-you-configure-installation.md) (modified: 2024-02-01T13:02-08:00)
 - [Copy installation files to a networked volume](https://help.claris.com/markdown/en/server-network-install-setup-guide/copy-files-to-networked-volume.md) (modified: 2025-09-02T13:49-07:00)
-- [Customize the personalization file](https://help.claris.com/markdown/en/server-network-install-setup-guide/customize-personalization-file.md) (modified: 2026-06-09T08:48-07:00)
+- [Customize the personalization file](https://help.claris.com/markdown/en/server-network-install-setup-guide/customize-personalization-file.md) (modified: 2026-08-21T13:34-07:00)
 - [Claris FileMaker Server Network Install Setup Guide](https://help.claris.com/markdown/en/server-network-install-setup-guide/index.md) (modified: 2024-06-04T08:10-07:00)
 - [How users perform an assisted installation (Windows and macOS)](https://help.claris.com/markdown/en/server-network-install-setup-guide/perform-assisted-installation-windows-macos.md) (modified: 2024-02-01T13:02-08:00)
 - [Where to find Claris product documentation](https://help.claris.com/markdown/en/server-network-install-setup-guide/product-documentation.md) (modified: 2023-04-24T17:12-07:00)

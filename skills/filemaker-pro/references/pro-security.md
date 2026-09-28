@@ -23,7 +23,7 @@
 - [Editing layouts privileges](https://help.claris.com/markdown/en/pro-help/layouts-privileges.md) (modified: 2023-04-24T17:12-07:00)
 - [Creating and editing extended privileges](https://help.claris.com/markdown/en/pro-help/managing-extended-privileges.md) (modified: 2026-06-09T08:48-07:00)
 - [Entering or editing OAuth 2.0 email options](https://help.claris.com/markdown/en/pro-help/oauth2-options.md) (modified: 2024-06-04T08:10-07:00)
-- [Editing other privileges](https://help.claris.com/markdown/en/pro-help/other-privileges.md) (modified: 2026-06-09T08:48-07:00)
+- [Editing other privileges](https://help.claris.com/markdown/en/pro-help/other-privileges.md) (modified: 2026-08-27T09:04-07:00)
 - [Opening files protected with passwords](https://help.claris.com/markdown/en/pro-help/password-protected-files.md) (modified: 2024-11-06T08:49-08:00)
 - [Password-protecting a local file](https://help.claris.com/markdown/en/pro-help/password-protecting.md) (modified: 2024-02-01T13:02-08:00)
 - [Planning security for a shared file](https://help.claris.com/markdown/en/pro-help/planning-security.md) (modified: 2026-06-09T08:48-07:00)

@@ -4,6 +4,6 @@
 
 
 - [Hour](https://help.claris.com/markdown/en/pro-help/hour.md) (modified: 2023-04-24T17:12-07:00)
-- [Minute](https://help.claris.com/markdown/en/pro-help/minute.md) (modified: 2023-04-24T17:12-07:00)
-- [Seconds](https://help.claris.com/markdown/en/pro-help/seconds.md) (modified: 2023-04-24T17:12-07:00)
+- [Minute](https://help.claris.com/markdown/en/pro-help/minute.md) (modified: 2026-08-24T11:40-07:00)
+- [Seconds](https://help.claris.com/markdown/en/pro-help/seconds.md) (modified: 2026-08-24T11:40-07:00)
 - [Time](https://help.claris.com/markdown/en/pro-help/time.md) (modified: 2023-04-24T17:12-07:00)

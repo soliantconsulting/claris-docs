@@ -25,5 +25,5 @@
 - [HexEncode](https://help.claris.com/markdown/en/pro-help/hexencode.md) (modified: 2023-04-24T17:12-07:00)
 - [ReadQRCode](https://help.claris.com/markdown/en/pro-help/readqrcode.md) (modified: 2024-11-06T08:49-08:00)
 - [TextDecode](https://help.claris.com/markdown/en/pro-help/textdecode.md) (modified: 2023-04-24T17:12-07:00)
-- [TextEncode](https://help.claris.com/markdown/en/pro-help/textencode.md) (modified: 2020-10-19T14:43-07:00)
+- [TextEncode](https://help.claris.com/markdown/en/pro-help/textencode.md) (modified: 2026-08-24T11:40-07:00)
 - [VerifyContainer](https://help.claris.com/markdown/en/pro-help/verifycontainer.md) (modified: 2023-04-24T17:12-07:00)

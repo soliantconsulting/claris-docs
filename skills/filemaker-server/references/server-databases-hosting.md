@@ -18,7 +18,7 @@
 - [Closing hosted files](https://help.claris.com/markdown/en/server-help/databases-close.md) (modified: 2023-04-24T17:12-07:00)
 - [Downloading database files](https://help.claris.com/markdown/en/server-help/databases-download.md) (modified: 2026-06-09T08:48-07:00)
 - [Clearing the database encryption password](https://help.claris.com/markdown/en/server-help/databases-encrypt-pw.md) (modified: 2024-02-01T13:02-08:00)
-- [Flushing hosted files](https://help.claris.com/markdown/en/server-help/databases-flush.md) (modified: 2025-07-08T08:33-07:00)
+- [Flushing hosted files](https://help.claris.com/markdown/en/server-help/databases-flush.md) (modified: 2026-09-03T17:31-07:00)
 - [Sending messages to clients of a hosted database](https://help.claris.com/markdown/en/server-help/databases-messages.md) (modified: 2024-02-01T13:02-08:00)
 - [Opening hosted files](https://help.claris.com/markdown/en/server-help/databases-open.md) (modified: 2024-02-01T13:02-08:00)
 - [Pausing and resuming hosted files](https://help.claris.com/markdown/en/server-help/databases-pause.md) (modified: 2023-04-24T17:12-07:00)

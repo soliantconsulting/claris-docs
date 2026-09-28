@@ -41,7 +41,7 @@
 - [Claris Connect Help](https://help.claris.com/markdown/en/connect-help/index.md) (modified: 2025-03-20T10:04-07:00)
 - [Install the agent](https://help.claris.com/markdown/en/connect-help/install-onpremise-agent.md) (modified: 2026-01-08T13:42-08:00)
 - [Integrating with Apple School Manager](https://help.claris.com/markdown/en/connect-help/integrate-with-apple-school-manager.md) (modified: 2026-08-20T13:17-07:00)
-- [Managing Claris Connect](https://help.claris.com/markdown/en/connect-help/manage-connect.md) (modified: 2026-01-08T13:42-08:00)
+- [Managing Claris Connect](https://help.claris.com/markdown/en/connect-help/manage-connect.md) (modified: 2026-08-25T12:51-07:00)
 - [Manually run a flow](https://help.claris.com/markdown/en/connect-help/manually-run-flow.md) (modified: 2022-10-31T08:22-07:00)
 - [Move a project](https://help.claris.com/markdown/en/connect-help/move-project.md) (modified: 2026-05-08T09:07-07:00)
 - [On Error steps](https://help.claris.com/markdown/en/connect-help/on-error-steps.md) (modified: 2024-03-27T10:13-07:00)
