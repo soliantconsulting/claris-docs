@@ -3,4 +3,4 @@
 # Claris FileMaker Server Release Notes
 
 
-- [Claris FileMaker Server Release Notes](https://help.claris.com/markdown/en/server-release-notes/index.md) (modified: 2026-08-28T15:10-07:00)
+- [Claris FileMaker Server Release Notes](https://help.claris.com/markdown/en/server-release-notes/index.md) (modified: 2026-10-09T08:52-07:00)

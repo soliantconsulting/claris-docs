@@ -4,6 +4,7 @@
 
 
 - [About Claris ID](https://help.claris.com/markdown/en/customer-console-help/about-filemakerid.md) (modified: 2023-09-28T13:02-07:00)
+- [Accessing Claris Connect](https://help.claris.com/markdown/en/customer-console-help/access-claris-connect.md) (modified: 2026-09-29T16:21-07:00)
 - [Changing a user’s license status (FileMaker Cloud)](https://help.claris.com/markdown/en/customer-console-help/add-licensed-user.md) (modified: 2024-12-09T16:07-08:00)
 - [Adding or removing users in a group (FileMaker Cloud)](https://help.claris.com/markdown/en/customer-console-help/add-remove-user.md) (modified: 2020-04-08T11:13-07:00)
 - [Adding or removing team managers](https://help.claris.com/markdown/en/customer-console-help/add-team-manager.md) (modified: 2023-09-28T13:02-07:00)
@@ -42,7 +43,6 @@
 - [Renewing your subscription (Claris Connect)](https://help.claris.com/markdown/en/customer-console-help/renew-subscription-connect.md) (modified: 2023-09-28T13:02-07:00)
 - [Renewing your subscription (FileMaker Cloud)](https://help.claris.com/markdown/en/customer-console-help/renew-subscription.md) (modified: 2026-06-09T08:48-07:00)
 - [Retrieving custom apps and log files (FileMaker Cloud)](https://help.claris.com/markdown/en/customer-console-help/retrieve-files.md) (modified: 2023-09-28T13:02-07:00)
-- [Setting up Claris Studio and Claris Connect](https://help.claris.com/markdown/en/customer-console-help/setting-up-studio-and-connect.md) (modified: 2025-08-06T12:53-07:00)
 - [Sharing apps with other users (FileMaker Cloud)](https://help.claris.com/markdown/en/customer-console-help/share-app.md) (modified: 2024-07-30T16:03-07:00)
 - [Signing in to Claris Customer Console](https://help.claris.com/markdown/en/customer-console-help/signin-fcc.md) (modified: 2026-06-09T08:48-07:00)
 - [Submitting a new host name (FileMaker Cloud)](https://help.claris.com/markdown/en/customer-console-help/submit-new-hostname.md) (modified: 2020-04-08T11:13-07:00)
